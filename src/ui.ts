@@ -37,11 +37,9 @@ export class UIComponent extends EventList {
 // =============================================================================
 // @@@ class Block
 // =============================================================================
-export class Block {
-	protected el: HTMLElement | null;
-
+class Block extends UIComponent {
 	constructor(selector: string) {
-		this.el = document.querySelector(selector);
+		super('Block', selector);
 	}
 
 	show() {
@@ -52,8 +50,8 @@ export class Block {
 		this.el && this.el.classList.add('is-hidden');
 	}
 
-	toggle(value: Boolean) {
-		value ? this.show() : this.hide();
+	toggle(isVisible: Boolean) {
+		isVisible ? this.show() : this.hide();
 	}
 };
 
@@ -69,49 +67,46 @@ export class Panel extends Block {
 // =============================================================================
 // @@@ class ToggleButton
 // =============================================================================
-export class ToggleButton extends EventList {
-	protected el:         HTMLElement | null;
-	protected is_selected: Boolean;
-
+class ToggleButton extends UIComponent {
+	private is_selected: Boolean;
 	private toggleSelect: () => void;
 
 	constructor(selector: string) {
-		super();
+		super('ToggleButton', selector);
 
-		this.el = document.querySelector(selector);
 		this.is_selected = false;
 
 		this.toggleSelect = this.toggle.bind(this);
-		this.el && this.el.addEventListener("click", this.toggleSelect);
+		this.el!.addEventListener("click", this.toggleSelect);
 	}
 
-	toggle(value:Boolean | undefined = undefined) {
-		if (value === undefined) {
-			this.is_selected = !this.is_selected;
-		}
-		else {
-			this.is_selected = value;
-			this.is_selected
-				? this.el && this.el.classList.add("selected")
-				: this.el && this.el.classList.remove("selected");
-		}
-		this.eventList.toggle && this.eventList.toggle(this.is_selected);
+	toggle() {
+		this.is_selected = !this.is_selected;
+
+		this.is_selected
+			? this.el!.classList.add("selected")
+			: this.el!.classList.remove("selected");
 	}
 
-	get isSelected(): Boolean {
+	get isSelected() {
 		return this.is_selected;
+	}
+
+	set isSelected(value: Boolean) {
+		this.is_selected = value;
+		this.eventList.toggle && this.eventList.toggle(this.is_selected);
 	}
 };
 
 // =============================================================================
 // @@@ class ButtonGroup
 // =============================================================================
-export class ButtonGroup extends EventList {
+class ButtonGroup extends UIComponent {
 	private wrapper: HTMLElement | null;
 	private buttons: HTMLButtonElement[];
 
 	constructor(selector: string, selectedIndex: number = 0) {
-		super();
+		super('ButtonGroup', selector);
 
 		this.wrapper = document.querySelector(selector);
 		this.buttons = [...this.wrapper!.querySelectorAll(`button`)];
@@ -134,7 +129,7 @@ export class ButtonGroup extends EventList {
 		})
 	};
 
-	get selectedIndex() {
+	get selectedIndex(): number {
 		let index = this.buttons.findIndex(el => el.classList.contains('selected'));
 		
 		if (index === -1)
@@ -223,8 +218,8 @@ export class Settings extends EventList {
 		this.cbRotation = new Checkbox('#cb-rotation', false);
 
 		this.btnSettings.on('toggle', (e) => this.panel.toggle(e));
-		this.btnSettings.toggle(this.is_open);
 
+		this.btnSettings.isSelected = this.is_open;
 		this.bindEvents();
 	}
 
