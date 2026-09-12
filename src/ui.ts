@@ -92,6 +92,8 @@ class ToggleButton extends UIComponent {
 		this.is_selected
 			? this.el!.classList.add("selected")
 			: this.el!.classList.remove("selected");
+
+		this.eventList.toggle && this.eventList.toggle(this.is_selected);
 	}
 
 	get isSelected() {

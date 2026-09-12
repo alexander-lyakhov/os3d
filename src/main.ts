@@ -1,9 +1,10 @@
 import './styles/index.scss'
+
 import { Settings, type EvendData } from './ui';
-import Grid from './grid';
-import Scene from './scene';
-import Animation from './animation';
-import type { Vector3D } from './transform';
+import Grid                         from './grid';
+import Scene                        from './scene';
+import Animation                    from './animation';
+import type { Vector3D }            from './transform';
 
 const config = [
 	{
@@ -11,19 +12,16 @@ const config = [
 		kFreq:  8,
 		kAmp:   0.05,
 	},
-
 	{
 		kDelay: 4000,
 		kFreq:  8,
 		kAmp:   0.025,
 	},
-	
 	{
 		kDelay: 1000,
 		kFreq:  2,
 		kAmp:   0.2,
 	},
-	
 	{
 		kDelay: 2500,
 		kFreq:  2,
@@ -40,7 +38,7 @@ declare global {
     }
 };
 
-window.app = (function useApp() {
+function useApp() {
 	const scene     = new Scene();
 	const grid      = new Grid();
 	const animation = new Animation();
@@ -68,7 +66,7 @@ window.app = (function useApp() {
 		},
 	}
 
-	window.addEventListener('resize', _this.reset);
+	window.addEventListener('resize', () => _this.reset());
 
 	window.addEventListener('keydown', (e) => {
 		if (e.keyCode >= 49 && e.keyCode <= 52) {
@@ -194,6 +192,7 @@ window.app = (function useApp() {
 		}
 	})
 
-	return _this;
+ 	window.app = _this;
+};
 
-})();
+window.addEventListener('load', useApp);
