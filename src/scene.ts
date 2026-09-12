@@ -87,7 +87,7 @@ export default class Scene {
 		this.ctx = this.canvas.getContext('2d');
 	}
 
-	init() {
+	init(): Scene {
 		if (this.canvas) {
 			this.canvas.width  = document.body.clientWidth;
 			this.canvas.height = document.body.clientHeight;
@@ -97,27 +97,27 @@ export default class Scene {
 		return this;
 	}
 
-	clear() {
+	clear(): void {
 		this.canvas && this.ctx && this.ctx.clearRect(
 			0, 0, this.canvas.width, this.canvas.height
 		);
 	}
 
-	pointToScreen({ x, y }: Vector2D) {
+	pointToScreen({ x, y }: Vector2D): Vector2D {
 		return {
 			x: (this.canvas!.width  + Math.round(x * this.unit_size * this.unit_scale)) >> 1,
 			y: (this.canvas!.height + (1 - Math.round(y * this.unit_size * this.unit_scale))) >> 1,
 		}
 	}
 
-	project({x, y, z}: Vector3D) {
+	project({x, y, z}: Vector3D): Vector2D {
 		return {
 			x: x / z,
 			y: y / z,
 		}
 	}
 
-	drawPoint(p: Point, size: number = 4) {
+	drawPoint(p: Vector2D, size: number = 4): void {
 		if (this.ctx) {
 			this.ctx.fillStyle = '#ffffff';
 

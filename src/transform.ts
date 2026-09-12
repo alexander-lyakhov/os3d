@@ -1,5 +1,3 @@
-import Point from './point'
-
 export type Vector2D = {
 	x: number;
 	y: number;
@@ -33,7 +31,7 @@ export default class Transform {
 	// =============================================================================
 	// @@@ [ M ] rotateXY
 	// =============================================================================
-	rotateXY(p: Vector3D, angle: number) {
+	rotateXY(p: Vector3D, angle: number): Vector3D {
 		this.rotation_z = angle;
 
 		const s = -Math.sin(angle);
@@ -48,7 +46,7 @@ export default class Transform {
 	// =============================================================================
 	// @@@ [ M ] rotateXZ
 	// =============================================================================
-	rotateXZ(p: Point, angle: number): Vector3D {
+	rotateXZ(p: Vector3D, angle: number): Vector3D {
 		this.rotation_y = angle;
 
 		const s = -Math.sin(angle);
@@ -63,7 +61,7 @@ export default class Transform {
 	// =============================================================================
 	// @@@ [ M ] rotateYZ
 	// =============================================================================
-	rotateYZ(p: Point, angle: number) {
+	rotateYZ(p: Vector3D, angle: number): Vector3D {
 		this.rotation_x = angle;
 
 		const s = -Math.sin(angle);

@@ -1,8 +1,9 @@
 import './styles/index.scss'
-import { Settings } from './ui';
+import { Settings, type EvendData } from './ui';
 import Grid from './grid';
 import Scene from './scene';
 import Animation from './animation';
+import type { Vector3D } from './transform';
 
 const config = [
 	{
@@ -33,6 +34,12 @@ const config = [
 // =============================================================================
 // @@@ [ M ] useApp
 // =============================================================================
+declare global {
+    interface Window {
+        app: any;
+    }
+};
+
 window.app = (function useApp() {
 	const scene     = new Scene();
 	const grid      = new Grid();
@@ -43,8 +50,8 @@ window.app = (function useApp() {
 	grid.init(config[0]);
 	animation.start();
 
-	grid[['toggle1D', 'toggle2D', 'toggle3D'][settings.groupDimensions.selectedIndex]]();
-	grid[['set0Deg', 'set45Deg'][settings.groupPerspective.selectedIndex]]();
+	grid[(['toggle1D', 'toggle2D', 'toggle3D'] as const)[settings.groupDimensions.selectedIndex]]();
+	grid[(['set0Deg', 'set45Deg'] as const)[settings.groupPerspective.selectedIndex]]();
 
 	grid.toggleVertex(settings.cbVertex.isChecked);
 	grid.toggleMesh(settings.cbMesh.isChecked);
@@ -131,7 +138,7 @@ window.app = (function useApp() {
 		}
 
 		grid.data.forEach((el) => {
-			let p = {
+			let p: Vector3D = {
 				x: el.x,
 				y: el.y,
 				z: el.z,
@@ -171,10 +178,12 @@ window.app = (function useApp() {
 		grid.isMeshVisible && grid.renderMesh(scene, grid.isVertexVisible ? '#e0e0e0' : '#ffffff');
 	});
 
-	settings.on('change', (e) => {
+	settings.on('change', (e: EvendData) => {
+		const action = grid[e.action as keyof Grid];
+
 		e.action === 'reset'
 			? _this.reset(config[e.index])
-			: grid[e.action] && grid[e.action]();
+			: typeof action === 'function' && (action as () => void).call(grid);
 
 		if (e.action === 'set0Deg' || e.action === 'set45Deg') {
 			settings.cbRotation.isChecked = false;

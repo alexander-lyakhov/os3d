@@ -44,15 +44,6 @@ export default class Grid extends Transform {
 
 		this.kx_distribution = Grid.xcount / (Grid.xcount - 1);
 		this.ky_distribution = Grid.ycount / (Grid.ycount - 1);
-
-		// this.isVertexVisible = true;
-		// this.isMeshVisible   = false;
-		// this.isFlat          = true;
-		// this.isRotating      = false;
-		
-		// this.spin_x          = Math.PI / 2;
-		// this.spin_y          = 0;
-		// this.spin_z          = 0;
 	}
 
 	// =============================================================================

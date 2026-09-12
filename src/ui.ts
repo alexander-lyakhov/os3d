@@ -2,8 +2,14 @@
 // @@@ class EventList
 // =============================================================================
 type EventHandler = (e: any) => any;
+
 type EventListType = {
 	[key: string]: EventHandler;
+};
+
+export type EvendData = {
+	action: string;
+	index:  number;
 };
 
 export class EventList {
@@ -124,7 +130,10 @@ class ButtonGroup extends UIComponent {
 			button.classList.add('selected');
 
 			if (this.eventList.change && button.dataset.action) {
-				this.eventList.change({ action: button.dataset.action, index: this.selectedIndex });
+				this.eventList.change({
+					action: button.dataset.action,
+					index:  this.selectedIndex,
+				});
 			}
 		})
 	};
@@ -181,7 +190,7 @@ export class Checkbox extends UIComponent {
 	onChange() {
 		this.eventList.change?.call(this, {
 			action: this.el!.dataset.action,
-			value:  this.checkbox!.checked
+			value:  this.checkbox!.checked,
 		});
 	}
 };
@@ -210,7 +219,7 @@ export class Settings extends EventList {
 		this.panel       = new Panel('.panel');
 
 		this.groupPresets     = new ButtonGroup('.button-group--presets', 0);
-		this.groupDimensions  = new ButtonGroup('.button-group--dimensions', 2);
+		this.groupDimensions  = new ButtonGroup('.button-group--dimensions', 1);
 		this.groupPerspective = new ButtonGroup('.button-group--perspective', 0);
 
 		this.cbVertex   = new Checkbox('#cb-vertex',   true);
