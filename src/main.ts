@@ -60,8 +60,8 @@ function useApp() {
 
 		reset(cfg = {}) {
 			animation.stop();
-			grid.init(cfg);
 			scene.init();
+			grid.init(cfg);
 			animation.start();
 		},
 	}

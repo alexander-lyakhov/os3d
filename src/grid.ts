@@ -26,8 +26,8 @@ export default class Grid extends Transform {
 	public isFlat: Boolean = true;
 	public isRotating: Boolean = false;
 
-	public data: Point[];
-	public mesh: Point[];
+	public data: Point[] = [];
+	public mesh: Point[] = [];
 
 	public spin_x = Math.PI / 2;
 	public spin_y = 0;
@@ -39,9 +39,6 @@ export default class Grid extends Transform {
 	constructor() {
 		super(0, 0, 4);
 
-		this.data = [];
-		this.mesh = [];
-
 		this.kx_distribution = Grid.xcount / (Grid.xcount - 1);
 		this.ky_distribution = Grid.ycount / (Grid.ycount - 1);
 	}
@@ -49,7 +46,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] init
 	// =============================================================================
-	init(cfg: GridConfig = {}) {
+	init(cfg: GridConfig = {}): void {
 		Grid.kDelay = cfg.kDelay || Grid.kDelay;
 		Grid.kFreq  = cfg.kFreq  || Grid.kFreq;
 		Grid.kAmp   = cfg.kAmp   || Grid.kAmp;
@@ -73,7 +70,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] #getPoint
 	// =============================================================================
-	#getPoint(x: number, y: number) {
+	#getPoint(x: number, y: number): Point {
 		const index = y * Grid.xcount + x;
 		return this.data[index]
 	}
@@ -81,7 +78,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] #createMesh
 	// =============================================================================
-	#createMesh() {
+	#createMesh(): void {
 		for (let col = 0; col < Grid.xcount - 1; col++)
 		{
 			// ----------------------------------------------------
@@ -116,7 +113,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] renderMesh
 	// =============================================================================
-	renderMesh(scene: Scene, color: string) {
+	renderMesh(scene: Scene, color: string): void {
 		scene.ctx!.beginPath();
 		scene.ctx!.strokeStyle = color;
 		scene.ctx!.lineWidth = 1;
@@ -147,7 +144,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] toggleVertex
 	// =============================================================================
-	toggleVertex(value: ToggleValue = undefined) {
+	toggleVertex(value: ToggleValue = undefined): void {
 		if (value === undefined)
 			this.isVertexVisible = !this.isVertexVisible;
 		else
@@ -157,7 +154,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] toggleMesh
 	// =============================================================================
-	toggleMesh(value: ToggleValue = undefined) {
+	toggleMesh(value: ToggleValue = undefined): void {
 		if (value === undefined)
 			this.isMeshVisible = !this.isMeshVisible;
 		else
@@ -167,7 +164,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] toggle1D
 	// =============================================================================
-	toggle1D() {
+	toggle1D(): void {
 		this.isFlat = false;
 		this.spin_x = Math.PI;
 	}
@@ -175,7 +172,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] toggle2D
 	// =============================================================================
-	toggle2D() {
+	toggle2D(): void {
 		this.isFlat = true;
 		this.spin_x = -Math.PI / 2;
 	}
@@ -183,7 +180,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] toggle3D
 	// =============================================================================
-	toggle3D() {
+	toggle3D(): void {
 		this.isFlat = false;
 		this.spin_x = -Math.PI / 6;
 	}
@@ -191,7 +188,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] toggleRotate
 	// =============================================================================
-	toggleRotate(value: ToggleValue = undefined) {
+	toggleRotate(value: ToggleValue = undefined): void {
 		if (value === undefined)
 			this.isRotating = !this.isRotating;
 		else
@@ -201,7 +198,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] toggle45Deg
 	// =============================================================================
-	toggle45Deg() {
+	toggle45Deg(): void {
 		this.isRotating = false;
 		this.spin_y = this.spin_y ? 0 : Math.PI / 4;
 	}
@@ -209,7 +206,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] set0Deg
 	// =============================================================================
-	set0Deg() {
+	set0Deg(): void {
 		this.isRotating = false;
 		this.rotation_y = 0;
 	}
@@ -217,7 +214,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] set45Deg
 	// =============================================================================
-	set45Deg() {
+	set45Deg(): void {
 		this.isRotating = false;
 		this.rotation_y = Math.PI / 4;
 	}

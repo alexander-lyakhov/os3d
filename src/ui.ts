@@ -18,7 +18,7 @@ export class EventList {
 		this.eventList = {};
 	}
 
-	on(eventName: string, callback:EventHandler) {
+	on(eventName: string, callback:EventHandler): EventList {
 		this.eventList[eventName] = callback;
 		return this;
 	}	
@@ -48,15 +48,15 @@ class Block extends UIComponent {
 		super('Block', selector);
 	}
 
-	show() {
+	show(): void {
 		this.el && this.el.classList.remove('is-hidden');
 	}
 
-	hide() {
+	hide(): void {
 		this.el && this.el.classList.add('is-hidden');
 	}
 
-	toggle(isVisible: Boolean) {
+	toggle(isVisible: boolean): void {
 		isVisible ? this.show() : this.hide();
 	}
 };
@@ -74,19 +74,17 @@ export class Panel extends Block {
 // @@@ class ToggleButton
 // =============================================================================
 class ToggleButton extends UIComponent {
-	private is_selected: Boolean;
+	private is_selected: boolean = false;
 	private toggleSelect: () => void;
 
 	constructor(selector: string) {
 		super('ToggleButton', selector);
 
-		this.is_selected = false;
-
 		this.toggleSelect = this.toggle.bind(this);
 		this.el!.addEventListener("click", this.toggleSelect);
 	}
 
-	toggle() {
+	toggle(): void {
 		this.is_selected = !this.is_selected;
 
 		this.is_selected
@@ -96,11 +94,11 @@ class ToggleButton extends UIComponent {
 		this.eventList.toggle && this.eventList.toggle(this.is_selected);
 	}
 
-	get isSelected() {
+	get isSelected(): boolean {
 		return this.is_selected;
 	}
 
-	set isSelected(value: Boolean) {
+	set isSelected(value: boolean) {
 		this.is_selected = value;
 		this.eventList.toggle && this.eventList.toggle(this.is_selected);
 	}
@@ -110,20 +108,18 @@ class ToggleButton extends UIComponent {
 // @@@ class ButtonGroup
 // =============================================================================
 class ButtonGroup extends UIComponent {
-	private wrapper: HTMLElement | null;
 	private buttons: HTMLButtonElement[];
 
 	constructor(selector: string, selectedIndex: number = 0) {
 		super('ButtonGroup', selector);
 
-		this.wrapper = document.querySelector(selector);
-		this.buttons = [...this.wrapper!.querySelectorAll(`button`)];
+		this.buttons = [...this.el!.querySelectorAll(`button`)];
 
 		if (this.buttons[selectedIndex]) {
 			this.buttons[selectedIndex].classList.add('selected');
 		}
 
-		this.wrapper!.addEventListener('click', (e) => {
+		this.el!.addEventListener('click', (e) => {
 			this.deselect();
 
 			const target = e.target as HTMLElement;
@@ -154,7 +150,7 @@ class ButtonGroup extends UIComponent {
 		this.buttons[index] && this.buttons[index].classList.add('selected');
 	}
 
-	deselect() {
+	deselect(): void {
 		this.buttons.forEach(el =>
 			el.classList.remove('selected')
 		);
@@ -168,7 +164,7 @@ export class Checkbox extends UIComponent {
 	private checkbox: HTMLInputElement | null;
 	private on_change: () => void;
 
-	constructor(selector: string, isChecked: Boolean = false) {
+	constructor(selector: string, isChecked: boolean = false) {
 		super('Checkbox', selector);
 		
 		this.el!.innerHTML = `<input type="checkbox" ${ isChecked && 'checked' } />`;
@@ -181,15 +177,15 @@ export class Checkbox extends UIComponent {
 			this.checkbox.addEventListener('change', this.on_change);
 	}
 
-	get isChecked() {
+	get isChecked(): boolean {
 		return this.checkbox!.checked;
 	}
 
-	set isChecked(value) {
+	set isChecked(value: boolean) {
 		 this.checkbox!.checked = value;
 	}
 
-	onChange() {
+	onChange(): void {
 		this.eventList.change?.call(this, {
 			action: this.el!.dataset.action,
 			value:  this.checkbox!.checked,
@@ -201,7 +197,7 @@ export class Checkbox extends UIComponent {
 // @@@ class Settings
 // =============================================================================
 export class Settings extends EventList {
-	private is_open: Boolean;
+	private is_open: boolean;
 	
 	public btnSettings: ToggleButton;
 	public panel: Panel;
@@ -217,16 +213,16 @@ export class Settings extends EventList {
 
 		this.is_open = cfg.isOpen;
 
-		this.btnSettings = new ToggleButton("#btn-settings");
-		this.panel       = new Panel('.panel');
+		this.btnSettings      = new ToggleButton("#btn-settings");
+		this.panel            = new Panel('.panel');
 
 		this.groupPresets     = new ButtonGroup('.button-group--presets', 0);
 		this.groupDimensions  = new ButtonGroup('.button-group--dimensions', 1);
 		this.groupPerspective = new ButtonGroup('.button-group--perspective', 0);
 
-		this.cbVertex   = new Checkbox('#cb-vertex',   true);
-		this.cbMesh     = new Checkbox('#cb-mesh',     false);
-		this.cbRotation = new Checkbox('#cb-rotation', false);
+		this.cbVertex         = new Checkbox('#cb-vertex',   true);
+		this.cbMesh           = new Checkbox('#cb-mesh',     false);
+		this.cbRotation       = new Checkbox('#cb-rotation', false);
 
 		this.btnSettings.on('toggle', (e) => this.panel.toggle(e));
 
@@ -234,7 +230,7 @@ export class Settings extends EventList {
 		this.bindEvents();
 	}
 
-	bindEvents() {
+	bindEvents(): void {
 		this.groupPresets    .on('change', (e) => this.eventList.change?.call(this, e));
 		this.groupDimensions .on('change', (e) => this.eventList.change?.call(this, e));
 		this.groupPerspective.on('change', (e) => this.eventList.change?.call(this, e));

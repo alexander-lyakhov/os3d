@@ -7,7 +7,7 @@ export default class Animation extends EventList {
 	private animation_id: AnimationID = null;
 
 	private firstFrame: (timestamp: number) => void;
-	private nextFrame: (timestamp: number) => void;
+	private nextFrame:  (timestamp: number) => void;
 
 	constructor() {
 		super();
@@ -16,22 +16,22 @@ export default class Animation extends EventList {
 		this.nextFrame  = this.next_frame.bind(this);
 	}
 
-	start() {
+	start(): void {
 		this.animation_id = requestAnimationFrame(this.firstFrame);
 	}
 
-	stop() {
+	stop(): void {
 		cancelAnimationFrame(this.animation_id as number);
 	}
 
-	first_frame(timestamp: number) {
+	first_frame(timestamp: number): void {
 		this.last_update = timestamp;
 		this.animation_id = requestAnimationFrame(this.nextFrame);
 
 		this.eventList.init?.call(this, { timestamp });
 	}
 
-	next_frame(timestamp: number) {
+	next_frame(timestamp: number): void {
 		const dt: number = (timestamp - this.last_update) / 1000;
 
 		this.last_update = timestamp;

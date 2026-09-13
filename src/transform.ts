@@ -14,18 +14,14 @@ export default class Transform {
 	public y: number;
 	public z: number;
 
-	public rotation_x: number;
-	public rotation_y: number;
-	public rotation_z: number;
+	public rotation_x: number = 0;
+	public rotation_y: number = 0;
+	public rotation_z: number = 0;
 
 	constructor(x = 0, y = 0, z = 0) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-
-		this.rotation_x = 0;
-		this.rotation_y = 0;
-		this.rotation_z = 0;
 	}
 
 	// =============================================================================

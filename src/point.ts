@@ -1,4 +1,5 @@
-import Grid from './grid';
+import Grid              from './grid';
+import type { Vector3D } from './transform';
 
 export default class Point {
 	static height = 4;
@@ -29,7 +30,7 @@ export default class Point {
 		this.phase_angle = 0;
 	}
 
-	updatePhase(dt: number) {
+	updatePhase(dt: number): Vector3D {
 		this.phase_angle += dt * Grid.kFreq;
 
 		const SIN = Math.sin(this.phase_angle) * Grid.kAmp;
