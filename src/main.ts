@@ -180,7 +180,7 @@ function useApp() {
 		grid.isMeshVisible && grid.renderMesh(scene, grid.isVertexVisible ? '#e0e0e0' : '#ffffff');
 	});
 
-	settings.on('change', (e: EvendData) => {
+	settings.on('change', (e: EventData) => {
 		const action = grid[e.action as keyof Grid];
 
 		e.action === 'reset'

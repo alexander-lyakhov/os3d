@@ -7,7 +7,7 @@ type EventListType = {
 	[key: string]: EventHandler;
 };
 
-export type EvendData = {
+export type EventData = {
 	action: string;
 	index:  number;
 };
