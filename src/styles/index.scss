@@ -1,4 +1,7 @@
 :root {
+    --accent-color:                  #ea4;
+    --middle-grey:                   #808080;
+
 	--ui-box-color:                  #000;
 	--ui-box-background:             #e0e0e0;
 
@@ -6,25 +9,26 @@
 	--icon-background:               #e0e0e0;
 	--icon-border-color:             #e0e0e0;
 	--icon-outline-color:            #000;
+
 	/*
 	--icon-text-color--selected:     #000;
-	--icon-background--selected:     #ea4;
+	--icon-background--selected:     var(--accent-color);
 	--icon-border-color--selected:   #e0e0e0;
 	*/
 	
 	--icon-color--selected:          #eee;
 	--icon-background--selected:     #484848;
-	--icon-border-color--selected:   #ea4;
+	--icon-border-color--selected:   var(--accent-color);
 
-	--icon-list-color: #eee;
-	--icon-list-background: #484848;
-	--icon-list-border-color: #484848;
-	--icon-list-outline-color: #eee;
+	--icon-list-color:               #eee;
+	--icon-list-background:          #484848;
+	--icon-list-border-color:        #484848;
+	--icon-list-outline-color:       #eee;
 	
 	--button-text-color:             #eee;
 	--button-background:             #484848;
 	--button-text-color--selected:   #000;
-	--button-background--selected:   #ea4;
+	--button-background--selected:   var(--accent-color);
 	--button-border-color--selected: #000;
 
 	--settings-panel-background:     #000;
@@ -48,11 +52,11 @@ html, body {
 
 .noselect {
 	-webkit-touch-callout: none; /* iOS Safari */
-	-webkit-user-select: none;   /* Chrome/Safari/Opera */
-	-khtml-user-select: none;  /* Konqueror */
-	-moz-user-select: none;    /* Firefox */
-	-ms-user-select: none;     /* IE/Edge */
-	user-select: none;
+	-webkit-user-select:   none;   /* Chrome/Safari/Opera */
+	-khtml-user-select:    none;  /* Konqueror */
+	-moz-user-select:      none;    /* Firefox */
+	-ms-user-select:       none;     /* IE/Edge */
+	user-select:           none;
 }
 
 ul, li {
@@ -83,8 +87,7 @@ canvas {
 	width: 100%;
 	height: 100%;
 	position: absolute;
-	left: 0;
-	top: 0;
+	inset: 0;
 }
 
 #left {
@@ -96,27 +99,33 @@ canvas {
 	top: 0;*/
 }
 
+.fps {
+	position: absolute;
+	left: 32px;
+	top: 32px;
+}
+
 .icon {
-	color:          var(--icon-color);
-	background:     var(--icon-background);
-	border:         2px solid var(--icon-border-color);
-	outline:        2px solid var(--icon-outline-color);
+	color: var(--icon-color);
+	background: var(--icon-background);
+	border: 2px solid var(--icon-border-color);
+	outline: 2px solid var(--icon-outline-color);
 	outline-offset: -4px;
-	display:        inline-flex;
-	padding:        6px;
-	cursor:         pointer;
+	display: inline-flex;
+	padding: 6px;
+	cursor: pointer;
 
 	&-list {
-		color:      var(--icon-list-color);
+		color: var(--icon-list-color);
 		background: var(--icon-list-background);
-		border:     2px solid var(--icon-list-border-color);
-		outline:    2px solid var(--icon-list-outline-color);
+		border: 2px solid var(--icon-list-border-color);
+		outline: 2px solid var(--icon-list-outline-color);
 	}
 
 	&.selected {
-		color:      var(--icon-color--selected);
+		color: var(--icon-color--selected);
 		background: var(--icon-background--selected);
-		border:     2px solid var(--icon-border-color--selected);
+		border: 2px solid var(--icon-border-color--selected);
 	}
 }
 
@@ -150,12 +159,9 @@ canvas {
 
 		li {
 			font-size: 18px;
-			// background: #c8c8c8;
 			display: flex;
-			// justify-content: space-between;
 			align-items: center;
 			gap: 8px;
-			// padding: 4px 4px;
 			
 			&:not(:first-child) {
 				margin-top: 4px;
@@ -222,10 +228,10 @@ button {
 			content: "";
 			background: linear-gradient(
 				to right,
-				#ea4 0%,
-				#ea4 50%,
-				#808080 50%,
-				#808080 100%
+				var(--accent-color) 0%,
+				var(--accent-color) 50%,
+				var(--middle-grey) 50%,
+				var(--middle-grey) 100%
 			);
 			width: $w * 2;
 			height: $h;

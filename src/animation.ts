@@ -32,11 +32,16 @@ export default class Animation extends EventList {
 	}
 
 	next_frame(timestamp: number): void {
-		const dt: number = (timestamp - this.last_update) / 1000;
+		const fps = Math.round(1000 / (timestamp - this.last_update));
+		const actual_dt = (timestamp - this.last_update) / 1000;
+		const dt = Math.min(actual_dt, .02);
+
+		if (actual_dt > 0.05)
+			console.log('LARGE DT:', actual_dt);
 
 		this.last_update = timestamp;
 		this.animation_id = requestAnimationFrame(this.nextFrame);
 
-		this.eventList.frame?.call(this, { timestamp, dt });
+		this.eventList.frame?.call(this, { timestamp, dt, fps });
 	}
 };

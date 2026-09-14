@@ -194,6 +194,19 @@ export class Checkbox extends UIComponent {
 };
 
 // =============================================================================
+// @@@ class FPS
+// =============================================================================
+export class FPS extends UIComponent {
+	constructor(selector: string) {
+		super('FPS', selector)
+	}
+
+	set value(fps_value: number) {
+		this.el!.textContent = `FPS: ${fps_value}`;
+	}
+};
+
+// =============================================================================
 // @@@ class Settings
 // =============================================================================
 export class Settings extends EventList {
@@ -201,9 +214,9 @@ export class Settings extends EventList {
 	
 	public btnSettings: ToggleButton;
 	public panel: Panel;
-    public groupPresets: ButtonGroup;
-    public groupDimensions: ButtonGroup;
-    public groupPerspective: ButtonGroup;
+	public groupPresets: ButtonGroup;
+	public groupDimensions: ButtonGroup;
+	public groupPerspective: ButtonGroup;
 	public cbVertex: Checkbox;
 	public cbMesh: Checkbox;
 	public cbRotation: Checkbox;

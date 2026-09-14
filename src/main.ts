@@ -1,10 +1,10 @@
 import './styles/index.scss'
 
-import { Settings, type EvendData } from './ui';
-import Grid                         from './grid';
-import Scene                        from './scene';
-import Animation                    from './animation';
-import type { Vector3D }            from './transform';
+import { Settings, FPS, type EvendData } from './ui';
+import Grid                              from './grid';
+import Scene                             from './scene';
+import Animation                         from './animation';
+import type { Vector3D }                 from './transform';
 
 const config = [
 	{
@@ -42,6 +42,7 @@ function useApp() {
 	const scene     = new Scene();
 	const grid      = new Grid();
 	const animation = new Animation();
+	const fps       = new FPS('.fps');
 	const settings  = new Settings({ isOpen: false })
 
 	scene.init();
@@ -128,8 +129,10 @@ function useApp() {
 		})
 	});
 	
-	animation.on('frame', ({ timestamp, dt }) => {
+	animation.on('frame', ({ timestamp, dt, fps: fps_value }) => {
 		scene.clear();
+
+		fps.value = fps_value;
 
 		if (grid.isRotating) {
 			grid.rotation_y += dt * 0.2;
