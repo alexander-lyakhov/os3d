@@ -1,6 +1,6 @@
 import './styles/index.scss'
 
-import { Settings, FPS, type EvendData } from './ui';
+import { Settings, FPS, type EventData } from './ui';
 import Grid                              from './grid';
 import Scene                             from './scene';
 import Animation                         from './animation';
