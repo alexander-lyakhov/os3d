@@ -36,8 +36,10 @@ export default class Animation extends EventList {
 		const actual_dt = (timestamp - this.last_update) / 1000;
 		const dt = Math.min(actual_dt, .02);
 
-		if (actual_dt > 0.05)
+		if (actual_dt > 0.05) {
 			console.log('LARGE DT:', actual_dt);
+			this.eventList.lag?.call(this, dt);
+		}
 
 		this.last_update = timestamp;
 		this.animation_id = requestAnimationFrame(this.nextFrame);

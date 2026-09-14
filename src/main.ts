@@ -132,7 +132,8 @@ function useApp() {
 	animation.on('frame', ({ timestamp, dt, fps: fps_value }) => {
 		scene.clear();
 
-		fps.value = fps_value;
+		if (fps_value !== Number.POSITIVE_INFINITY)
+			fps.value = fps_value;
 
 		if (grid.isRotating) {
 			grid.rotation_y += dt * 0.2;
