@@ -145,20 +145,14 @@ export default class Grid extends Transform {
 	// @@@ [ M ] toggleVertex
 	// =============================================================================
 	toggleVertex(value: ToggleValue = undefined): void {
-		if (value === undefined)
-			this.isVertexVisible = !this.isVertexVisible;
-		else
-			this.isVertexVisible = value;
+		this.isVertexVisible = value == undefined ? !this.isVertexVisible : value;
 	}
 
 	// =============================================================================
 	// @@@ [ M ] toggleMesh
 	// =============================================================================
 	toggleMesh(value: ToggleValue = undefined): void {
-		if (value === undefined)
-			this.isMeshVisible = !this.isMeshVisible;
-		else
-			this.isMeshVisible = value;
+		this.isMeshVisible = value == undefined ? !this.isMeshVisible : value;
 	}
 
 	// =============================================================================
@@ -189,10 +183,7 @@ export default class Grid extends Transform {
 	// @@@ [ M ] toggleRotate
 	// =============================================================================
 	toggleRotate(value: ToggleValue = undefined): void {
-		if (value === undefined)
-			this.isRotating = !this.isRotating;
-		else
-			this.isRotating = value;
+		this.isRotating = value == undefined ? !this.isRotating : value;
 	}
 
 	// =============================================================================
@@ -217,5 +208,12 @@ export default class Grid extends Transform {
 	set45Deg(): void {
 		this.isRotating = false;
 		this.rotation_y = Math.PI / 4;
+	}
+
+	// =============================================================================
+	// @@@ [ M ] toggleColor
+	// =============================================================================
+	toggleColor(value = undefined) {
+		this.isColorized = value == undefined ? !this.isColorized : value;
 	}
 };

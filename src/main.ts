@@ -121,6 +121,11 @@ function useApp() {
 			settings.cbRotation.isChecked = !settings.cbRotation.isChecked;
 			settings.groupPerspective.deselect();
 		}
+
+		if (e.code === 'KeyC') {
+			grid.toggleColor();
+			settings.cbColor.isChecked = !settings.cbColor.isChecked;
+		}
 	});
 
 	animation.on('init', ({ timestamp }) => {
@@ -150,6 +155,8 @@ function useApp() {
 				p = el.updatePhase(dt)
 			}
 
+			const tz = p.z
+
 			if (!grid.isFlat) { // 2D
 				p.x = el.x;
 				p.y = el.y;
@@ -169,8 +176,10 @@ function useApp() {
 						y: p.y + grid.y,
 						z: p.z + grid.z,
 					})
-				)
-			)
+				),
+				tz,
+				grid.isColorized,
+			);
 
 			el.tx = p.x + grid.x;
 			el.ty = p.y + grid.y;
@@ -200,3 +209,4 @@ function useApp() {
 };
 
 window.addEventListener('load', useApp);
+Y

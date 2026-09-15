@@ -45,9 +45,21 @@ export default class Scene {
 		}
 	}
 
-	drawPoint(p: Vector2D, size: number = 4): void {
+	drawPoint(p: Vector2D, tz: number, isColorized: boolean = false) {
+		let color = '#ffffff';
+
+		if (isColorized) {
+			const channel = Math.round(255 * Math.abs(tz) * 15);
+
+			color = tz > 0
+				? `#00${channel.toString(16).padStart(2, '0')}ff`
+				: `#${channel.toString(16).padStart(2, '0')}00ff`;
+		}
+
+		const size = 4;
+
 		if (this.ctx) {
-			this.ctx.fillStyle = '#ffffff';
+			this.ctx.fillStyle = color;
 
 			this.ctx.fillRect(
 				p.x - (Point.width  >> 1),

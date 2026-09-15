@@ -236,6 +236,7 @@ export class Settings extends EventList {
 		this.cbVertex         = new Checkbox('#cb-vertex',   true);
 		this.cbMesh           = new Checkbox('#cb-mesh',     false);
 		this.cbRotation       = new Checkbox('#cb-rotation', false);
+		this.cbColor          = new Checkbox('#cb-color', false);
 
 		this.btnSettings.on('toggle', (e) => this.panel.toggle(e));
 
@@ -251,5 +252,6 @@ export class Settings extends EventList {
 		this.cbVertex  .on('change', (e) => this.eventList.change?.call(this, e));
 		this.cbMesh    .on('change', (e) => this.eventList.change?.call(this, e));
 		this.cbRotation.on('change', (e) => this.eventList.change?.call(this, e));
+		this.cbColor   .on('change', (e) => this.eventList.change?.call(this, e));
 	}
 };
