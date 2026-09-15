@@ -212,14 +212,15 @@ export class FPS extends UIComponent {
 export class Settings extends EventList {
 	private is_open: boolean;
 	
-	public btnSettings: ToggleButton;
-	public panel: Panel;
-	public groupPresets: ButtonGroup;
-	public groupDimensions: ButtonGroup;
+	public btnSettings:      ToggleButton;
+	public panel:            Panel;
+	public groupPresets:     ButtonGroup;
+	public groupDimensions:  ButtonGroup;
 	public groupPerspective: ButtonGroup;
-	public cbVertex: Checkbox;
-	public cbMesh: Checkbox;
-	public cbRotation: Checkbox;
+	public cbVertex:         Checkbox;
+	public cbMesh:           Checkbox;
+	public cbRotation:       Checkbox;
+	public cbColor:          Checkbox;
 
 	constructor(cfg = {isOpen: false}) {
 		super();

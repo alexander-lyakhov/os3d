@@ -8,7 +8,7 @@ type GridConfig = {
 	kAmp?: number;
 };
 
-type ToggleValue = Boolean | undefined;
+type ToggleValue = boolean | undefined;
 
 export default class Grid extends Transform {
 	static xcount = 41;
@@ -21,10 +21,11 @@ export default class Grid extends Transform {
 	private kx_distribution: number;
 	private ky_distribution: number;
 
-	public isVertexVisible: Boolean = true;
-	public isMeshVisible: Boolean = false;
-	public isFlat: Boolean = true;
-	public isRotating: Boolean = false;
+	public isVertexVisible: boolean = true;
+	public isMeshVisible:   boolean = false;
+	public isFlat:          boolean = true;
+	public isRotating:      boolean = false;
+	public isColorized:     boolean = false;
 
 	public data: Point[] = [];
 	public mesh: Point[] = [];
