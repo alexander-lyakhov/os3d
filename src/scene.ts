@@ -16,6 +16,9 @@ export default class Scene {
 		this.ctx = this.canvas.getContext('2d');
 	}
 
+	// =============================================================================
+	// @@@ [ M ] init
+	// =============================================================================
 	init(): Scene {
 		if (this.canvas) {
 			this.canvas.width  = document.body.clientWidth;
@@ -26,12 +29,18 @@ export default class Scene {
 		return this;
 	}
 
+	// =============================================================================
+	// @@@ [ M ] clear
+	// =============================================================================
 	clear(): void {
 		this.canvas && this.ctx && this.ctx.clearRect(
 			0, 0, this.canvas.width, this.canvas.height
 		);
 	}
 
+	// =============================================================================
+	// @@@ [ M ] pointToScreen
+	// =============================================================================
 	pointToScreen({ x, y }: Vector2D): Vector2D {
 		return {
 			x: (this.canvas!.width  + Math.round(x * this.unit_size * this.unit_scale)) >> 1,
@@ -39,6 +48,9 @@ export default class Scene {
 		}
 	}
 
+	// =============================================================================
+	// @@@ [ M ] project
+	// =============================================================================
 	project({x, y, z}: Vector3D): Vector2D {
 		return {
 			x: x / z,
@@ -46,6 +58,9 @@ export default class Scene {
 		}
 	}
 
+	// =============================================================================
+	// @@@ [ M ] drawPoint
+	// =============================================================================
 	drawPoint(p: Vector2D, tz: number, isColorized: boolean = false) {
 		let color = '#ffffff';
 
