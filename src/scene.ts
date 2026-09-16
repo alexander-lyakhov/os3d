@@ -1,4 +1,5 @@
 import Point                       from "./point";
+import Grid                        from "./grid"
 import type { Vector2D, Vector3D } from "./transform";
 
 export default class Scene {
@@ -49,11 +50,30 @@ export default class Scene {
 		let color = '#ffffff';
 
 		if (isColorized) {
-			const channel = Math.round(255 * Math.abs(tz) * 15);
+			const channel = Math.min(255, Math.round(255 * Math.abs(tz) / Grid.kAmp));
+
+			const xx = `${channel.toString(16).padStart(2, '0')}`;
+			// const XX = `${(255 - (channel >> 1)).toString(16).padStart(2, '0')}`;
+
+			/*color = tz > 0
+				? `#ff${xx}${xx}`
+				: `#0000${XX}`;*/
 
 			color = tz > 0
-				? `#00${channel.toString(16).padStart(2, '0')}ff`
-				: `#${channel.toString(16).padStart(2, '0')}00ff`;
+				? `#00${xx}ff`
+				: `#${xx}00ff`;
+
+			/*color = tz > 0
+				? `#${xx}${xx}ff`
+				: `#0000${XX}`;*/
+
+			/*color = tz > 0
+				? `#ff${xx}${xx}`
+				: `#${XX}00${XX}`;*/
+
+			/*color = tz > 0
+				? `#${xx}ff${xx}`
+				: `#ff${XX}00`;*/
 		}
 
 		const size = 4;
