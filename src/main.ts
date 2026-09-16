@@ -43,7 +43,9 @@ function useApp() {
 	const grid      = new Grid();
 	const animation = new Animation();
 	const fps       = new FPS('.fps');
-	const settings  = new Settings({ isOpen: false })
+	const settings  = new Settings('.settings', { isOpen: false });
+
+	settings.show();
 
 	scene.init();
 	grid.init(config[0]);

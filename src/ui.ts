@@ -12,6 +12,9 @@ export type EventData = {
 	index:  number;
 };
 
+// =============================================================================
+// @@@ class EventList
+// =============================================================================
 export class EventList {
 	protected eventList: EventListType;
 	constructor() {
@@ -30,13 +33,13 @@ export class EventList {
 export class UIComponent extends EventList {
 	protected el: HTMLElement | null;
 
-	constructor(componentName: string, selector: string) {
+	constructor(selector: string, componentType: string = 'UIComponent') {
 		super();
 
 		this.el = document.querySelector(selector);
 
 		if (!this.el)
-			throw new Error(`-[ ${componentName} ]- Selector is invalid or not provided`);
+			throw new Error(`-[ ${componentType} ]- Selector is invalid or not provided`);
 	}
 };
 
@@ -44,12 +47,15 @@ export class UIComponent extends EventList {
 // @@@ class Block
 // =============================================================================
 class Block extends UIComponent {
-	constructor(selector: string) {
-		super('Block', selector);
+	constructor(selector: string, componentType: string = 'Block') {
+		super(selector, componentType);
 	}
 
 	show(): void {
-		this.el && this.el.classList.remove('is-hidden');
+		if (this.el) {
+			this.el.classList.remove('is-hidden');
+			this.el.style.visibility = 'visible';
+		}
 	}
 
 	hide(): void {
@@ -65,8 +71,8 @@ class Block extends UIComponent {
 // @@@ class Panel
 // =============================================================================
 export class Panel extends Block {
-	constructor(selector: string) {
-		super(selector);
+	constructor(selector: string, componentType: string = 'Panel') {
+		super(selector, componentType);
 	}
 };
 
@@ -78,7 +84,7 @@ class ToggleButton extends UIComponent {
 	private toggleSelect: () => void;
 
 	constructor(selector: string) {
-		super('ToggleButton', selector);
+		super(selector, 'ToggleButton');
 
 		this.toggleSelect = this.toggle.bind(this);
 		this.el!.addEventListener("click", this.toggleSelect);
@@ -111,7 +117,7 @@ class ButtonGroup extends UIComponent {
 	private buttons: HTMLButtonElement[];
 
 	constructor(selector: string, selectedIndex: number = 0) {
-		super('ButtonGroup', selector);
+		super(selector, 'ButtonGroup');
 
 		this.buttons = [...this.el!.querySelectorAll(`button`)];
 
@@ -165,7 +171,7 @@ export class Checkbox extends UIComponent {
 	private on_change: () => void;
 
 	constructor(selector: string, isChecked: boolean = false) {
-		super('Checkbox', selector);
+		super(selector, 'Checkbox');
 		
 		this.el!.innerHTML = `<input type="checkbox" ${ isChecked && 'checked' } />`;
 		this.checkbox = this.el!.querySelector('input[type=checkbox]');
@@ -198,7 +204,7 @@ export class Checkbox extends UIComponent {
 // =============================================================================
 export class FPS extends UIComponent {
 	constructor(selector: string) {
-		super('FPS', selector)
+		super(selector, 'FPS')
 	}
 
 	set value(fps_value: number) {
@@ -209,7 +215,7 @@ export class FPS extends UIComponent {
 // =============================================================================
 // @@@ class Settings
 // =============================================================================
-export class Settings extends EventList {
+export class Settings extends Block {
 	private is_open: boolean;
 	
 	public btnSettings:      ToggleButton;
@@ -222,8 +228,8 @@ export class Settings extends EventList {
 	public cbRotation:       Checkbox;
 	public cbColor:          Checkbox;
 
-	constructor(cfg = {isOpen: false}) {
-		super();
+	constructor(selector: string, cfg = {isOpen: false}) {
+		super(selector, 'Settings');
 
 		this.is_open = cfg.isOpen;
 

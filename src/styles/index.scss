@@ -130,8 +130,7 @@ canvas {
 }
 
 .settings {
-	display: flex;
-	flex-direction: column;
+	display: block;
 	position: absolute;
 	top: 24px;
 	right: 24px;
