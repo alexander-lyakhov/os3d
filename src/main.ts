@@ -116,6 +116,11 @@ function useApp() {
 		if (e.code === 'KeyM') {
 			grid.toggleMesh();
 			settings.cbMesh.isChecked = !settings.cbMesh.isChecked;
+
+			if (settings.cbMesh.isChecked) {
+				settings.cbColor.isChecked = false;
+				grid.toggleColor(false);
+			}
 		}
 
 		if (e.code === 'KeyR') {
@@ -127,6 +132,11 @@ function useApp() {
 		if (e.code === 'KeyC') {
 			grid.toggleColor();
 			settings.cbColor.isChecked = !settings.cbColor.isChecked;
+
+			if (settings.cbColor.isChecked) {
+				settings.cbMesh.isChecked = false;
+				grid.toggleMesh(false);
+			}
 		}
 	});
 
@@ -204,6 +214,16 @@ function useApp() {
 
 		if (settings.cbRotation.isChecked) {
 			settings.groupPerspective.deselect();
+		}
+
+		if (e.action == 'toggleMesh') {
+			settings.cbColor.isChecked = false;
+			grid.toggleColor(false);
+		}
+
+		if (e.action == 'toggleColor') {
+			settings.cbMesh.isChecked = false;
+			grid.toggleMesh(false);
 		}
 	})
 
