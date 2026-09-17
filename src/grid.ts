@@ -214,7 +214,7 @@ export default class Grid extends Transform {
 	// =============================================================================
 	// @@@ [ M ] toggleColor
 	// =============================================================================
-	toggleColor(value = undefined) {
+	toggleColor(value: ToggleValue = undefined) {
 		this.isColorized = value == undefined ? !this.isColorized : value;
 	}
 };
